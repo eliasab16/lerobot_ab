@@ -159,7 +159,15 @@ class OpenCVCamera(Camera):
         # blocking in multi-threaded applications, especially during data collection.
         cv2.setNumThreads(1)
 
-        self.videocapture = cv2.VideoCapture(self.index_or_path, self.backend)
+        backends = [cv2.CAP_ANY, cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_V4L2]
+        for backend in backends:
+            self.videocapture = cv2.VideoCapture(self.index_or_path, backend)
+            if self.videocapture.isOpened():
+                print(f"Camera opened successfully with backend {backend}")
+                break
+        else:
+            print("Failed to open camera with any backend")
+        # self.videocapture = cv2.VideoCapture(self.index_or_path, self.backend)
 
         if not self.videocapture.isOpened():
             self.videocapture.release()
