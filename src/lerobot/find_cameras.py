@@ -199,8 +199,9 @@ def process_camera_image(
     cam_id_str = str(meta.get("id", "unknown"))
 
     try:
+        # logger.error(f"***** before reading")
         image_data = cam.read()
-
+        # logger.error(f"*** image data for camera {cam_id_str}: {image_data}")
         return save_image(
             image_data,
             cam_id_str,

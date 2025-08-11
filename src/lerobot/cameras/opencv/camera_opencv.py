@@ -159,11 +159,11 @@ class OpenCVCamera(Camera):
         # blocking in multi-threaded applications, especially during data collection.
         cv2.setNumThreads(1)
 
-        backends = [cv2.CAP_ANY, cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_V4L2]
+        backends = [cv2.CAP_ANY, cv2.CAP_DSHOW, cv2.CAP_MSMF, cv2.CAP_V4L2, cv2.CAP_AVFOUNDATION]
         for backend in backends:
             self.videocapture = cv2.VideoCapture(self.index_or_path, backend)
             if self.videocapture.isOpened():
-                print(f"Camera opened successfully with backend {backend}")
+                print(f"Camera opened successfully with backend {str(backend)}")
                 break
         else:
             print("Failed to open camera with any backend")
@@ -178,7 +178,6 @@ class OpenCVCamera(Camera):
             )
 
         self._configure_capture_settings()
-
         if warmup:
             start_time = time.time()
             while time.time() - start_time < self.warmup_s:
@@ -327,6 +326,10 @@ class OpenCVCamera(Camera):
         start_time = time.perf_counter()
 
         ret, frame = self.videocapture.read()
+        # logging.error(f"camera number {self.index_or_path}:\n>> ret: {ret},\n>>>>\n======")
+        # if (self.index_or_path == 2):
+            # ret, frame = cv2.VideoCapture(2).read()
+            # logger.error(f"*** video capture: {ret},\n")
 
         if not ret or frame is None:
             raise RuntimeError(f"{self} read failed (status={ret}).")
