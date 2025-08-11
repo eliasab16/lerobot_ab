@@ -1,0 +1,20 @@
+{
+  "teleoperate": {
+    "command": "python -m lerobot.teleoperate",
+    "args": [
+      "--robot.type=bi_so100_follower",
+      "--robot.left_arm_port=/dev/tty.usbmodem5A680122821",
+      "--robot.right_arm_port=/dev/tty.usbmodem5A680121381",
+      "--robot.id=bimanual_follower",
+      "--teleop.type=bi_so100_leader",
+      "--teleop.left_arm_port=/dev/tty.usbmodem5A680110941",
+      "--teleop.right_arm_port=/dev/tty.usbmodem5A680135321",
+      "--teleop.id=bimanual_leader",
+      "--display_data=true"
+    ]
+  },
+  "test": {
+    "command": "echo",
+    "args": ["Hello from Modal AI!"]
+  }
+}
